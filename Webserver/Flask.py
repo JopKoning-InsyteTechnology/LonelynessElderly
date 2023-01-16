@@ -1,7 +1,6 @@
 import Credentials as CRD
 
 import requests
-tes
 
 from argparse import Action
 from ast import Global
