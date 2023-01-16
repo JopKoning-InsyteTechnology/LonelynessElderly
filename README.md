@@ -8,6 +8,7 @@ Code used for the elderly lonelyness project
 ## Getting Started
 
 ### Dependencies
+
 *Tested with Python 3.8.10
 *Required python packages
 *Flask>=0.12
