@@ -51,16 +51,9 @@ CTRL+SHIFT+P ngrok:start -> enter port 5000
 copy ngrok URL and paste in Credentials.py
 ``
 * Run __main__.py with required parameters
-``
+````
 python3 __main__.py V Jop +31638475605
-``
-
-
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+````
 
 ## Help
 
