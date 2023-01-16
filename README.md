@@ -9,13 +9,13 @@ Code used for the elderly lonelyness project
 
 ### Dependencies
 
-*Tested with Python 3.8.10
-*Required python packages
-*Flask>=0.12
-*twilio
-*flask-sock 
-*simple-websocket 
-*TODO: Complete this
+* Tested with Python 3.8.10
+* Required python packages
+* Flask>=0.12
+* twilio
+* flask-sock 
+* simple-websocket 
+* TODO: Complete this
 
 ### Installing
 
