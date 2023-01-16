@@ -500,7 +500,7 @@ def Finalize():
     global Classification
     global METHOD
 
-    with open("Attendance/activity1", "a") as fo:
+    with open("../Attendance/activity1", "a") as fo:
             fo.write(Classification + "\n")
 
 
@@ -670,6 +670,7 @@ def Recording_Done():
     return str(response)
 
 ########################################################## RECORDING END ########################################################################################
+# 
 
 # @app.route("/", methods=['GET', 'POST'])
 # def answer_call():
