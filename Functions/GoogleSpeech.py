@@ -1,0 +1,2 @@
+def Google():
+    return "Google"
