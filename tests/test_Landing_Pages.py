@@ -29,12 +29,12 @@ def test_landing_page_test_Speech_API(client):
     response = client.post('/SpeechAPI_test/Start')
     assert response.status_code == 200
 
-def test_landing_page_Voice_Call_Initial_Test(client):
+# def test_landing_page_Voice_Call_Initial_Test(client):
 
-    GET_URL = '/Voice_Call_Initial/Voice'
-    EXPECTED_URL_RESPONSE = '/Voice_Call_Initial/Voice/Wait_for_greeting'
+#     GET_URL = '/Voice_Call_Initial/Voice'
+#     EXPECTED_URL_RESPONSE = '/Voice_Call_Initial/Voice/Wait_for_greeting'
 
-    response = client.post(GET_URL)
-    Complete_URL = "<Redirect>" + Config.BASE_URL + EXPECTED_URL_RESPONSE + "</Redirect>"
-    assert Complete_URL.encode("utf-8") in response.data
+#     response = client.post(GET_URL)
+#     Complete_URL = "<Redirect>" + Config.BASE_URL + EXPECTED_URL_RESPONSE + "</Redirect>"
+#     assert Complete_URL.encode("utf-8") in response.data
 

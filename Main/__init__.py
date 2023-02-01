@@ -4,6 +4,7 @@ from flask import Flask, send_from_directory
 import Config.General.General_Config as Config
 from flask_sock import Sock
 
+import time
 
 from Webserver.Voice.Voice_Call_Initial import  Voice_Call_Initial
 from Webserver.Voice.Voice_Call_Callback import  Voice_Call_Callback
@@ -12,6 +13,10 @@ from Webserver.Dail.Dail_Call_Callback import  Dail_Call_Callback
 
 from Webserver.SpeechAPI.SpeechAPI import stream_google
 from Webserver.SpeechAPI.SpeechAPI_test import SpeechAPI_test
+
+import GlobalVariables
+
+from Functions.General import Logger
 
 from Static import Static
 
@@ -53,7 +58,6 @@ def create_app(test_config=None):
 
     app.register_blueprint(Static, url_prefix='/Static')
 
-
     #TODO: Check google speech
     @sock.route('/SpeechAPI/stream_google')
     def Speech(ws):
@@ -61,10 +65,10 @@ def create_app(test_config=None):
         print("__INIT__.PY MAIN: We are done with the socket, no remaining connections")
         return 200
         
-
-
-
-
+    GlobalVariables.FILE = time.strftime("%Y%m%d-%H%M%S") + ".txt"
+    Logger("MAIN", "Starting", "INFO")
+    
+    #GlobalVariables.Voice_Messages.get("")
     ################################################## End Load blueprints ##########################################################
 
 
