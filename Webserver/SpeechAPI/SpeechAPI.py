@@ -40,7 +40,7 @@ def on_transcription_response(response, ended):
 
 def stream_google(ws):
     print("STARTING WEBSOCKET")
-  
+    GlobalVariables.IsActive = True
     GlobalVariables.LastMessage = ""
     GlobalVariables.TimeLastMessage = time()
     GlobalVariables.TimeFunctionStarted = time()
@@ -85,6 +85,7 @@ def stream_google(ws):
         bridge.terminate()
         t.join()
         print("STREAM-GOOGLE-WEBSOCKET: thread terminated, status is:" + str(t.isAlive()))
+        GlobalVariables.IsActive = False
         
 
     
@@ -92,9 +93,10 @@ def stream_google(ws):
         bridge.terminate()
         t.join()
         print("STREAM-GOOGLE-WEBSOCKET: exception occured : " + str(e))
-        GlobalVariables.LastMessage = ""
-        GlobalVariables.TimeLastMessage = 0
-        GlobalVariables.TimeFunctionStarted = 0
+        # GlobalVariables.LastMessage = ""
+        # GlobalVariables.TimeLastMessage = 0
+        # GlobalVariables.TimeFunctionStarted = 0
+        GlobalVariables.IsActive = False
         print("STREAM-GOOGLE-WEBSOCKET: Cleared Global Variables")
 
         

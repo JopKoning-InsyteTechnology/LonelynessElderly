@@ -8,16 +8,21 @@ from twilio.twiml.voice_response import VoiceResponse
 import Config.General.General_Config as Config
 
 # Import Functions
-import Functions.General
+from Functions.General import Listen, Play, Redirect, Classify
+
+# from GlobalVariables import Voice_Initial, LastMessage
+import GlobalVariables
+
 
 
 
 Voice_Call_Initial = Blueprint('Voice_Call_Initial', __name__,
     static_folder='static')
 
+Task_URL = "/" + Voice_Call_Initial.name
 ## Get the complete URL to this blueprint file
-#Task_URL = Config.BASE_URL+request.url_rule.rule
-
+#
+Errors = 0
 
 @Voice_Call_Initial.route('/Start', methods=['GET', 'POST'])
 def list():
@@ -26,96 +31,117 @@ def list():
 
 @Voice_Call_Initial.route("/Voice", methods=['GET', 'POST'])
 def Voice():
-        Task_URL = Config.BASE_URL+request.url_rule.rule
-        #TODO check if we can do this by call ID or in main
-        # with open("Transcribed_call.txt", "a") as fo:
-        #                 fo.write("Starting Call to voice\n")
-                        
-        resp = VoiceResponse()
-        # Voice_Call_Initial.logger.info("Base URL of this blueprint = " + str(Task_URL))
-        # #TODO check if this is nessesary
-        # # global TimeToWait_begin
-        # # global TimeToWait_begin_Initial
-        # # Voice_Call_Initial.logger.info("Setting TimeToWait_begin before setting = " + str(TimeToWait_begin))
-        # # TimeToWait_begin = TimeToWait_begin_Initial
-        # # Voice_Call_Initial.logger.info("Setting TimeToWait_begin after setting = " + str(TimeToWait_begin))
-        # # global METHOD
-        # # METHOD = "VOICE"
+        print(Task_URL)
+        # print(request.url_root)
+        # print(request.url_rule)
+        # print(request.url_rule.rule)
+        # print(Voice_Call_Initial.name)
+
+        return Redirect(Task_URL + "/Listen_For_Hello")
+
+@Voice_Call_Initial.route("/Listen_For_Hello", methods=['GET', 'POST'])
+def Listen_For_Hello():
+        return Listen(1,2,Task_URL + "/Listen_For_Hello", Task_URL + "/Play_Greeting_Message") 
+
+@Voice_Call_Initial.route("/Play_Greeting_Message", methods=['GET', 'POST'])
+def Play_Greeting_Message():
         
-        resp.redirect(Task_URL+"/Wait_for_greeting")
+        return Play(GlobalVariables.Voice_Initial.Welcome_Message, Task_URL + "/Play_Explain_Message")
 
-        return str(resp)
+@Voice_Call_Initial.route("/Play_Explain_Message", methods=['GET', 'POST'])
+def Play_Explain_Message():
+        
+        return Play(GlobalVariables.Voice_Initial.Explanation_Message, Task_URL + "/Listen_For_Answer")
 
-@Voice_Call_Initial.route("/Wait_for_greeting", methods=['GET', 'POST'])
-def Wait_for_greeting():
-    """Wait for a person to respond"""
-    return Functions.General.Wait_for_answer("Greet")
+@Voice_Call_Initial.route("/Listen_For_Answer", methods=['GET', 'POST'])
+def Listen_For_Answer():
+        
+        return Listen(3,2,Task_URL + "/Listen_For_Answer", Task_URL + "/Classify_Answer")
 
-@Voice_Call_Initial.route("/Greet", methods=['GET', 'POST'])
-def Greet():
-    return Functions.General.Play("Greet", "Ask_for_activity_speech")
-    return Say("Hallo, u spreekt met jop koning van de activiteitenorganisatie", "Ask_for_activity_speech" )
+@Voice_Call_Initial.route("/Classify_Answer", methods=['GET', 'POST'])
+def Classify_Answer():
+        
+        global Errors
 
-@Voice_Call_Initial.route("/Ask_for_activity_speech", methods=['GET', 'POST'])
-def Ask_for_activity_speech():
-    return Functions.General.Play("Ask_for_activity_speech_voice", "Wait_for_activity_reaction" )
-    return Say("We gaan vanavond bridgen, heeft u zin om mee te doen?", "Wait_for_activity_reaction" )
+        Classification = Classify(GlobalVariables.LastMessage)
+
+        print(GlobalVariables.LastMessage)
+        print(Classification)
+
+        if(Classification == "Yes"):
+            return Redirect(Task_URL + "/Play_Check_Answer_Message/Yes")
+        
+        elif(Classification == "No"):
+            return Redirect(Task_URL + "/Play_Check_Answer_Message/No")
+
+        else:
+            if (Errors >= 3):
+                Errors = 0
+                return Redirect(Task_URL + "/Finalize/Unclear")
+            else:
+                Errors += 1
+                return Redirect(Task_URL + "/Play_Check_Answer_Message/Unclear")
+
+@Voice_Call_Initial.route("/Play_Check_Answer_Message/<Classification>", methods=['GET', 'POST'])
+def Classification(Classification):
     
-@Voice_Call_Initial.route("/Wait_for_activity_reaction", methods=['GET', 'POST'])
-def Wait_for_activity_reaction():
-    return Functions.General.Wait_for_answer("Play_Thanks")
 
-@Voice_Call_Initial.route("/Play_Thanks", methods=['GET', 'POST'])
-def Play_Thanks():
-    return Functions.General.Play("DankUWel", "Classify_activity_reaction")
-    return Say("Dank u wel!", "Classify_activity_reaction")
+    if(Classification == "Yes"):
+        return Play(GlobalVariables.Voice_Initial.Check_Yes_Message, Task_URL + "/Listen_For_Check_Answer_Result/Yes")
+    
+    elif(Classification == "No"):
+        return Play(GlobalVariables.Voice_Initial.Check_No_Message, Task_URL + "/Listen_For_Check_Answer_Result/No")
 
-@Voice_Call_Initial.route("/Classify_activity_reaction", methods=['GET', 'POST'])
-def Clasify_activity_reaction():
-    resp = VoiceResponse()
+    else:
+        return Play(GlobalVariables.Voice_Initial.Check_Unclear_Message, Task_URL + "/Listen_For_Answer")
 
-    # global LastMessage
-    # app.logger.info("Classify LastMessage = " + LastMessage)
-    # global CHECK
-    # app.logger.info("CHECK = " + str(CHECK))
+@Voice_Call_Initial.route("/Listen_For_Check_Answer_Result/<Classification>", methods=['GET', 'POST'])
+def Listen_For_Check_Answer_Result(Classification):
+    
+    return Listen(2,2,Task_URL + "/Listen_For_Check_Answer_Result/" + Classification, Task_URL +"/Classify_Answer_2/" + Classification)
 
-    # global Classification
-    # match (Classify_transcription(LastMessage)):
-    #     case "Ja":
-    #         app.logger.info("Classification = Ja")
-    #         Classification = "Ja"
-    #         app.logger.info("Classification = Ja")
+@Voice_Call_Initial.route("/Classify_Answer_2/<Classification>", methods=['GET', 'POST'])
+def Classify_Answer_2(Classification):
+    
+    global Errors
 
-    #         if (METHOD == "VOICE"):
-    #             if (CHECK == True):
-    #                 resp.redirect(URL+"Finalize")
-    #             resp.redirect(URL+"Activity_say_yes")
-    #         if (METHOD == "VOICE_CALLBACK"):  
-    #             resp.redirect(URL+"Finalize")
-    #         resp.redirect(URL+"Activity_say_yes")
+    result = Classify(GlobalVariables.LastMessage)
 
-    #     case "Nee":
-    #         app.logger.info("Classification = Nee")
-    #         Classification = "Nee"
+    print("Message to Classify : " + GlobalVariables.LastMessage)
+    print("Result of classification : " + result)
+    print("Number of errors : " + str(Errors))
 
-    #         if (METHOD == "VOICE"):
-    #             if (CHECK == True):
-    #                 resp.redirect(URL+"Finalize")
-    #             resp.redirect(URL+"Activity_say_no")
-    #         if (METHOD == "VOICE_CALLBACK"):  
-    #             resp.redirect(URL+"Callback_Additional_Message")
-    #         resp.redirect(URL+"Activity_say_no")
+    if(result == "Yes"):
+        Errors = 0
+        return Redirect(Task_URL + "/Finalize/" + Classification)
+    
 
-    #     case "Unclear":
-    #         resp.redirect(URL+"Activity_say_unclear")
+    elif(result == "No"):
+        if (Errors >= 3):
+            Errors = 0
+            return Redirect(Task_URL + "/Finalize/Unclear")
+        Errors += 1
+        if(Classification == "No"):
+            return Redirect(Task_URL + "/Play_Check_Answer_Message/Yes")
+        return Redirect(Task_URL + "/Play_Check_Answer_Message/No")
 
-    #     case "None":
-    #         resp.redirect(URL+"Activity_say_unclear")
 
-    #     case _:    
-    #         resp.redirect(URL+"Activity_say_unclear")
-    return str(resp)
+    else:
+        if (Errors >= 3):
+            Errors = 0
+            return Redirect(Task_URL + "/Finalize/Unclear")
+        else:
+            Errors += 1
+            return Redirect(Task_URL + "/Play_Check_Answer_Message/Unclear")
 
-@Voice_Call_Initial.route("/Test_Google_Speech", methods=['GET', 'POST'])
-def Google_Speech():
-    return Functions.General.Wait_for_answer("Play_Thanks")
+@Voice_Call_Initial.route("/Finalize/<Classification>", methods=['GET', 'POST'])
+def Finalize(Classification):
+    
+
+    if(Classification == "Yes"):
+        return Play(GlobalVariables.Voice_Initial.Finalize_Yes_Message, "")
+    
+    elif(Classification == "No"):
+        return Play(GlobalVariables.Voice_Initial.Finalize_No_Message, Task_URL + "")
+    else:
+        return Play(GlobalVariables.Voice_Initial.Finalize_Unclear_Message, Task_URL + "")

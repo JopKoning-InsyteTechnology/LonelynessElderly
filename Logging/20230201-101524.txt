@@ -1,0 +1,21 @@
+INFO : MAIN : Starting
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : GOOGLE_SPEECH_API_TEST : Started Google speech api test
+INFO : LISTENING_FUNCTION : Done with listening, Message was -> hallo
+INFO : LISTENING_FUNCTION : Done with listening, Message was -> test
