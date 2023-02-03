@@ -1,4 +1,0 @@
-INFO : MAIN : Starting
-INFO : MAIN : Starting
-INFO : MAIN : Starting
-INFO : LISTENING_FUNCTION : Done with listening, Message was -> 

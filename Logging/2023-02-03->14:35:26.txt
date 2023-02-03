@@ -1,0 +1,19 @@
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:26	INFO 	 LISTENING_FUNCTION 	 Done with listening, Message was -> 
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:26	INFO 	 DAIL_CALL_INITIAL 	 in /Play_Greeting_Message
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:26	INFO 	 DAIL_CALL_INITIAL 	 in /Play_Explain_Message
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:26	INFO 	 DAIL_CALL_INITIAL 	 in /Play_Check_Answer_Message/Yes
+2023-02-03  14:35:26	INFO 	 DAIL_CALL_INITIAL 	 in /Play_Check_Answer_Message/No
+2023-02-03  14:35:26	INFO 	 DAIL_CALL_INITIAL 	 in /Play_Check_Answer_Message/Unclear
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:26	INFO 	 DAIL_CALL_INITIAL 	 in /Finalize/Yes
+2023-02-03  14:35:26	INFO 	 DAIL_CALL_INITIAL 	 in /Finalize/No
+2023-02-03  14:35:26	INFO 	 DAIL_CALL_INITIAL 	 in /Finalize/Unclear
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:26	INFO 	 MAIN 	 Starting
+2023-02-03  14:35:27	INFO 	 LISTENING_FUNCTION 	 Done with listening, Message was -> Done

@@ -2,7 +2,7 @@ from twilio.twiml.voice_response import Start, Stop, Gather, Stream, VoiceRespon
 import Config.General.General_Config as Config
 from flask import request
 import GlobalVariables
-from time import time, sleep
+from time import time, sleep, strftime
 
 
 def Start_Stream(Redirect):
@@ -71,12 +71,16 @@ def Listen(Minimal_Wait, Timeout, Current_URL, Redirect_adress):
 
 def Logger(Host, Messsage, Severity):
     f = open("Logging/" + GlobalVariables.FILE, "a")
-    f.write(Severity + " : " + Host + " : " + Messsage + "\n")
+    f.write(strftime("%Y-%m-%d  %H:%M:%S") + "\t" + Severity + " \t " + Host + " \t " + Messsage + "\n")
     f.close()
 
+def Logger_Classification(Host, Messsage, Severity):
+    f = open("Logging/" + GlobalVariables.FILE + "_Classification", "a")
+    f.write(strftime("%Y-%m-%d  %H:%M:%S") + "\t" + Severity + " \t " + Host + " \t " + Messsage + "\n")
+    f.close()
 
 def Redirect(Redirect):
-    resp = VoiceResponse()
+    resp = VoiceResponse() 
     resp.redirect(Config.BASE_URL + Redirect)
     return str(resp)
 
@@ -112,3 +116,77 @@ def Classify(Message):
                 return "Yes"
     
     return "Unclear"
+
+def GatherDailInput(Redirect_on_input, Redirect_on_error):
+    #TODO: Test this
+    """Respond to incoming phone calls with a menu of options"""
+    # Start our TwiML response
+    resp = VoiceResponse()
+
+    # Start our <Gather> verb
+    gather = Gather(num_digits=1, action=Redirect_on_input)
+    resp.append(gather)
+
+    # If the user doesn't select an option, redirect them into a loop
+    resp.redirect(Redirect_on_error)
+
+    return str(resp)
+    
+def ClassifyDailInput(Input, Redirect_on_1, Redirect_on_2,Redirect_on_3, Redirect_on_other):
+
+    #TODO: Test this
+    """Processes results from the <Gather> prompt in /voice"""
+    # Start our TwiML response
+    resp = VoiceResponse()
+    global Classification
+
+    # If Twilio's request to our app included already gathered digits,
+    # process them
+    if 'Digits' in Input.values:
+        # Get which digit the caller chose
+        choice = Input.values['Digits']
+
+        # <Say> a different message depending on the caller's choice
+        if choice == '1':
+            resp.redirect(Redirect_on_1)
+            return str(resp)
+        elif choice == '2':
+            resp.redirect(Redirect_on_2)
+            return str(resp)
+        elif choice == '3':
+            resp.redirect(Redirect_on_3)
+            return str(resp)
+        else:
+            # If the caller didn't choose 1 or 2, apologize and ask them again
+            return str(resp.redirect(Redirect_on_other))
+    else: 
+        #resp.say("Er is iets mis gegaan, we proberen het opnieuw")
+        return str(resp.redirect(Redirect_on_other))
+
+def ClassifyDailInputSimple(Input):
+
+    #TODO: Test this
+    """Processes results from the <Gather> prompt in /voice"""
+    # Start our TwiML response
+    resp = VoiceResponse()
+    global Classification
+
+    # If Twilio's request to our app included already gathered digits,
+    # process them
+    if 'Digits' in Input.values:
+        # Get which digit the caller chose
+        choice = Input.values['Digits']
+
+        # <Say> a different message depending on the caller's choice
+        if choice == '1':
+            return "Yes"
+        elif choice == '2':
+            return "No"
+        elif choice == '3':
+            return "Unclear"
+        else:
+            # If the caller didn't choose 1 or 2, apologize and ask them again
+            return "Unclear"
+    else: 
+        #resp.say("Er is iets mis gegaan, we proberen het opnieuw")
+            return "Unclear"

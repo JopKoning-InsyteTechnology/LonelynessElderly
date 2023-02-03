@@ -4,7 +4,7 @@ from Functions.SpeechClientBridge import SpeechClientBridge
 # from Global_Variables import Speech_Recognition 
 import GlobalVariables
 
-
+from Functions.General import Logger_Classification
 from google.cloud.speech import RecognitionConfig, StreamingRecognitionConfig
 from time import time
 from twilio.rest import Client
@@ -27,15 +27,21 @@ client = Client(Config.TWILIO_ACCOUNT_SID, Config.TWILIO_AUTH_TOKEN)
 
 def on_transcription_response(response, ended):
     if not response.results:
+        print ("ON_TRANSCRIPTION_RESPONSE: No results for the input")
+        Logger_Classification("ON-TRANSCRIPTION-RESPONSE", str(GlobalVariables.TimeLastMessage) + " : NOTHING RECOGNIZED", "INFO")
+
         return
 
     result = response.results[0]
     if not result.alternatives:
+        print ("ON_TRANSCRIPTION_RESPONSE: No alternatives for the input")
+
         return
 
     transcription = result.alternatives[0].transcript
     GlobalVariables.LastMessage = transcription
     GlobalVariables.TimeLastMessage = time()
+    Logger_Classification("ON-TRANSCRIPTION-RESPONSE", str(GlobalVariables.TimeLastMessage) + " : " + str(GlobalVariables.LastMessage), "INFO")
     print("ON-TRANSCRIPTION-RESPONSE: " + str(GlobalVariables.TimeLastMessage) + " : " + str(GlobalVariables.LastMessage) )
 
 def stream_google(ws):
@@ -52,7 +58,7 @@ def stream_google(ws):
         bridge = SpeechClientBridge(streaming_config, on_transcription_response)
         t = threading.Thread(target=bridge.start)
         t.start()
-
+        
         while True:            
             message = ws.receive()
             if message is None:
@@ -78,21 +84,27 @@ def stream_google(ws):
                 # break                                
         
             if data["event"] == "stop":
+                print("\nSTREAM-GOOGLE-WEBSOCKET: message is stop")
                 break
 
         print("STREAM-GOOGLE-WEBSOCKET: Break occured, Terminating thread. Current thread status :" + str(t.isAlive()))
 
         bridge.terminate()
-        t.join()
-        print("STREAM-GOOGLE-WEBSOCKET: thread terminated, status is:" + str(t.isAlive()))
+        print("STREAM-GOOGLE-WEBSOCKET: Joining Thread")
+
+        #t.join()
+        print("STREAM-GOOGLE-WEBSOCKET: thread terminated and joined, status is:" + str(t.isAlive()))
         GlobalVariables.IsActive = False
         
 
     
     except Exception as e:
-        bridge.terminate()
-        t.join()
         print("STREAM-GOOGLE-WEBSOCKET: exception occured : " + str(e))
+        print("STREAM-GOOGLE-WEBSOCKET: Terminating Thread")
+        bridge.terminate()
+        print("STREAM-GOOGLE-WEBSOCKET: Joining Thread")
+        #t.join()
+        print("STREAM-GOOGLE-WEBSOCKET: Thread Joined")
         # GlobalVariables.LastMessage = ""
         # GlobalVariables.TimeLastMessage = 0
         # GlobalVariables.TimeFunctionStarted = 0

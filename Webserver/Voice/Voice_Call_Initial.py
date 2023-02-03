@@ -8,18 +8,24 @@ from twilio.twiml.voice_response import VoiceResponse
 import Config.General.General_Config as Config
 
 # Import Functions
-from Functions.General import Listen, Play, Redirect, Classify
+from Functions.General import Listen, Play, Redirect, Classify, Logger
 
 # from GlobalVariables import Voice_Initial, LastMessage
 import GlobalVariables
 
+import requests
 
+
+Default_ListenTime_Begin = 2
+Default_ListenTime_Silence = 1.5
 
 
 Voice_Call_Initial = Blueprint('Voice_Call_Initial', __name__,
     static_folder='static')
 
 Task_URL = "/" + Voice_Call_Initial.name
+
+Host = "VOICE_CALL_INITIAL"
 ## Get the complete URL to this blueprint file
 #
 Errors = 0
@@ -32,6 +38,7 @@ def list():
 @Voice_Call_Initial.route("/Voice", methods=['GET', 'POST'])
 def Voice():
         print(Task_URL)
+        Logger(Host,"in /Voice", "INFO")
         # print(request.url_root)
         # print(request.url_rule)
         # print(request.url_rule.rule)
@@ -41,25 +48,26 @@ def Voice():
 
 @Voice_Call_Initial.route("/Listen_For_Hello", methods=['GET', 'POST'])
 def Listen_For_Hello():
-        return Listen(1,2,Task_URL + "/Listen_For_Hello", Task_URL + "/Play_Greeting_Message") 
+        return Listen(1,1,Task_URL + "/Listen_For_Hello", Task_URL + "/Play_Greeting_Message") 
 
 @Voice_Call_Initial.route("/Play_Greeting_Message", methods=['GET', 'POST'])
 def Play_Greeting_Message():
-        
+        Logger(Host,"in /Play_Greeting_Message", "INFO")
         return Play(GlobalVariables.Voice_Initial.Welcome_Message, Task_URL + "/Play_Explain_Message")
 
 @Voice_Call_Initial.route("/Play_Explain_Message", methods=['GET', 'POST'])
 def Play_Explain_Message():
-        
+        Logger(Host,"in /Play_Explain_Message", "INFO")        
         return Play(GlobalVariables.Voice_Initial.Explanation_Message, Task_URL + "/Listen_For_Answer")
 
 @Voice_Call_Initial.route("/Listen_For_Answer", methods=['GET', 'POST'])
 def Listen_For_Answer():
         
-        return Listen(3,2,Task_URL + "/Listen_For_Answer", Task_URL + "/Classify_Answer")
+        return Listen(Default_ListenTime_Begin,Default_ListenTime_Silence,Task_URL + "/Listen_For_Answer", Task_URL + "/Classify_Answer")
 
 @Voice_Call_Initial.route("/Classify_Answer", methods=['GET', 'POST'])
 def Classify_Answer():
+        Logger(Host,"in /Classify_Answer", "INFO")
         
         global Errors
 
@@ -84,6 +92,7 @@ def Classify_Answer():
 
 @Voice_Call_Initial.route("/Play_Check_Answer_Message/<Classification>", methods=['GET', 'POST'])
 def Classification(Classification):
+    Logger(Host,"in /Play_Check_Answer_Message/" + Classification, "INFO")
     
 
     if(Classification == "Yes"):
@@ -98,11 +107,12 @@ def Classification(Classification):
 @Voice_Call_Initial.route("/Listen_For_Check_Answer_Result/<Classification>", methods=['GET', 'POST'])
 def Listen_For_Check_Answer_Result(Classification):
     
-    return Listen(2,2,Task_URL + "/Listen_For_Check_Answer_Result/" + Classification, Task_URL +"/Classify_Answer_2/" + Classification)
+    return Listen(Default_ListenTime_Begin,Default_ListenTime_Silence,Task_URL + "/Listen_For_Check_Answer_Result/" + Classification, Task_URL +"/Classify_Answer_2/" + Classification)
 
 @Voice_Call_Initial.route("/Classify_Answer_2/<Classification>", methods=['GET', 'POST'])
 def Classify_Answer_2(Classification):
-    
+    Logger(Host,"in /Classify_Answer_2/" + Classification, "INFO")
+
     global Errors
 
     result = Classify(GlobalVariables.LastMessage)
@@ -136,12 +146,18 @@ def Classify_Answer_2(Classification):
 
 @Voice_Call_Initial.route("/Finalize/<Classification>", methods=['GET', 'POST'])
 def Finalize(Classification):
+    Logger(Host,"in /Finalize/" + Classification, "INFO")
     
-
     if(Classification == "Yes"):
-        return Play(GlobalVariables.Voice_Initial.Finalize_Yes_Message, "")
+        return Play(GlobalVariables.Voice_Initial.Finalize_Yes_Message,Task_URL+ "/Hangup")
     
     elif(Classification == "No"):
-        return Play(GlobalVariables.Voice_Initial.Finalize_No_Message, Task_URL + "")
+        return Play(GlobalVariables.Voice_Initial.Finalize_No_Message, Task_URL + "/Hangup")
     else:
-        return Play(GlobalVariables.Voice_Initial.Finalize_Unclear_Message, Task_URL + "")
+        return Play(GlobalVariables.Voice_Initial.Finalize_Unclear_Message, Task_URL + "/Hangup")
+
+@Voice_Call_Initial.route("/Hangup", methods=['GET', 'POST'])
+def Hangup():
+    return str(VoiceResponse())
+
+ 

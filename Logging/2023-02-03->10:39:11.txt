@@ -1,0 +1,15 @@
+2023-02-03  10:39:11	INFO 	 MAIN 	 Starting
+2023-02-03  10:39:11	INFO 	 VOICE_CALL_INITIAL 	 in /Voice
+2023-02-03  10:39:11	INFO 	 MAIN 	 Starting
+2023-02-03  10:39:11	INFO 	 LISTENING_FUNCTION 	 Done with listening, Message was -> 
+2023-02-03  10:39:11	INFO 	 MAIN 	 Starting
+2023-02-03  10:39:11	INFO 	 VOICE_CALL_INITIAL 	 in /Play_Greeting_Message
+2023-02-03  10:39:11	INFO 	 MAIN 	 Starting
+2023-02-03  10:39:11	INFO 	 VOICE_CALL_INITIAL 	 in /Play_Explain_Message
+2023-02-03  10:39:11	INFO 	 MAIN 	 Starting
+2023-02-03  10:39:11	INFO 	 LISTENING_FUNCTION 	 Done with listening, Message was -> 
+2023-02-03  10:39:11	INFO 	 MAIN 	 Starting
+2023-02-03  10:39:11	INFO 	 VOICE_CALL_INITIAL 	 in /Classify_Answer
+2023-02-03  10:39:11	INFO 	 VOICE_CALL_INITIAL 	 in /Classify_Answer
+2023-02-03  10:39:11	INFO 	 MAIN 	 Starting
+2023-02-03  10:39:11	INFO 	 MAIN 	 Starting
