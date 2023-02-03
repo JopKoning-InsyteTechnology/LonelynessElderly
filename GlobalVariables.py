@@ -12,24 +12,50 @@ YesClassifierList = ['ja', 'dat klopt']
 NoClassifierList = ['nee', 'dat klopt niet']
 
 #Audio files
-ThankYouMessage = "/Static/General/DankUWel"
-ErrorMessage = "/Static/General/Error"
-
+ThankYouMessage = "/General/DankUWel"
+ErrorMessage = "/General/Error"
 
 class Voice_Initial:
-    Welcome_Message = "/Static/General/Greet"
-    Explanation_Message = "/Static/Voice/Voice_Initial/Question_Initial"
-    Check_Yes_Message = "/Static/Voice/Response_Check/Yes"
-    Check_No_Message = "/Static/Voice/Response_Check/No"
-    Check_Unclear_Message = "/Static/Voice/Response_Check/No"
-    Finalize_Yes_Message = "/Static/General/Finalize/Initial/Yes"
-    Finalize_No_Message = "/Static/General/Finalize/Initial/No"
-    Finalize_Unclear_Message = "/Static/General/Finalize/Finalize_unclear"
+    Welcome_Message = "General/Greet"
+    Explanation_Message = "Voice/Voice_Initial/Question_Initial"
+    Check_Yes_Message = "Voice/Response_Check/Yes"
+    Check_No_Message = "Voice/Response_Check/No"
+    Check_Unclear_Message = "Voice/Response_Check/Unclear"
+    Finalize_Yes_Message = "General/Finalize/Initial/Yes"
+    Finalize_No_Message = "General/Finalize/Initial/No"
+    Finalize_Unclear_Message = "General/Finalize/Finalize_unclear"
 
-# class Voice_Callback:
-#     Voice_Callback_Explaination_Message = "/Static/Voice_Callback/Actitity_Explaination"
-#     Voice_Callback_Aditional_Message = "/Static/Voice_Callback/Additional_Message"
-#     Voice_Callback_Finalize_Yes_Message = "/Static/Voice_Callback/Yes"
+class Voice_Callback:
+    Welcome_Message = "General/Greet"
+    Voice_Callback_Explaination_Message = "Voice/Voice_Callback/Activity_Explaination"
+    Voice_Callback_Aditional_Message = "Voice/Voice_Callback/Additional_Message"
+    Voice_Callback_Finalize_Yes_Message = "Voice/Voice_Callback/Yes"
+
+
+class Dail_Initial:
+    Welcome_Message = "General/Greet"
+    Explanation_Message = "Dail/Dail_Initial/Question_Initial"
+    Check_Yes_Message = "Dail/Response_Check/Yes"
+    Check_No_Message = "Dail/Response_Check/No"
+    Check_Unclear_Message = "Dail/Response_Check/Unclear"
+    Finalize_Yes_Message = "General/Finalize/Initial/Yes"
+    Finalize_No_Message = "General/Finalize/Initial/No"
+    Finalize_Unclear_Message = "General/Finalize/Finalize_unclear"
+
+class Dail_Callback:
+    Welcome_Message = "General/Greet"
+    Callback_Explaination_Message = "Dail/Dail_Callback/Activity_Explaination"
+    Callback_Aditional_Message = "Dail/Dail_Callback/Additional_Message"
+    Callback_Finalize_Yes_Message = "Dail/Dail_Callback/Yes"
+
+
+
+
+
+
+
+
+
 
 # class Dail_Initial:
 #     Welcome_Message = "/Static/General/Greet"

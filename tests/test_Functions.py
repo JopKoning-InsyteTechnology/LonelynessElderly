@@ -26,7 +26,7 @@ def test_config():
 #     assert STREAM in response
 
 def test_Play_function(client):
-    AUDIOFILE = "DankUWel"
+    AUDIOFILE = GlobalVariables.Voice_Initial.Welcome_Message
     REDIRECT_URL = "/test" 
 
     response = Functions.General.Play(AUDIOFILE, REDIRECT_URL)
@@ -46,7 +46,7 @@ def test_Listen_function(client):
     GlobalVariables.IsActive = True
     GlobalVariables.StreamStarted = False
 
-    GlobalVariables.LastMessage = ""
+    GlobalVariables.LastMessage = "Done"
     GlobalVariables.TimeFunctionStarted = 0
     GlobalVariables.TimeLastMessage = 0
 
@@ -58,7 +58,7 @@ def test_Listen_function(client):
     GlobalVariables.IsActive = False
     GlobalVariables.StreamStarted = False
 
-    GlobalVariables.LastMessage = ""
+    GlobalVariables.LastMessage = "Done"
     GlobalVariables.TimeFunctionStarted = 0
     GlobalVariables.TimeLastMessage = 0
 
@@ -72,7 +72,7 @@ def test_Listen_function(client):
     GlobalVariables.IsActive = False
     GlobalVariables.StreamStarted = True
 
-    GlobalVariables.LastMessage = ""
+    GlobalVariables.LastMessage = "Done"
     GlobalVariables.TimeFunctionStarted = 0
     GlobalVariables.TimeLastMessage = 0
 
@@ -84,7 +84,7 @@ def test_Listen_function(client):
     GlobalVariables.IsActive = True
     GlobalVariables.StreamStarted = True
 
-    GlobalVariables.LastMessage = ""
+    GlobalVariables.LastMessage = "Done"
     GlobalVariables.TimeFunctionStarted = time()
     GlobalVariables.TimeLastMessage = time()
 
@@ -94,7 +94,7 @@ def test_Listen_function(client):
     GlobalVariables.IsActive = True
     GlobalVariables.StreamStarted = True
 
-    GlobalVariables.LastMessage = ""
+    GlobalVariables.LastMessage = "Done"
     GlobalVariables.TimeFunctionStarted = time()- 5
     GlobalVariables.TimeLastMessage = time() - 5
 

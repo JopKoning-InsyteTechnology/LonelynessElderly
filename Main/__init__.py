@@ -1,9 +1,9 @@
 import os
 
-from flask import Flask, send_from_directory
+from flask import Flask, request
 import Config.General.General_Config as Config
 from flask_sock import Sock
-
+import requests
 import time
 
 from Webserver.Voice.Voice_Call_Initial import  Voice_Call_Initial
@@ -19,6 +19,9 @@ import GlobalVariables
 from Functions.General import Logger
 
 from Static import Static
+
+# Twilio Imports
+from twilio.twiml.voice_response import VoiceResponse
 
 from Test2.Test2 import  products_bp_2
 
@@ -65,10 +68,27 @@ def create_app(test_config=None):
         print("__INIT__.PY MAIN: We are done with the socket, no remaining connections")
         return 200
         
-    GlobalVariables.FILE = time.strftime("%Y%m%d-%H%M%S") + ".txt"
+    GlobalVariables.FILE = time.strftime("%Y-%m-%d->%H:%M:%S") + ".txt"
     Logger("MAIN", "Starting", "INFO")
     
-    #GlobalVariables.Voice_Messages.get("")
+
+
+  ########################################################## RECORDING END ########################################################################################
+
+    @app.route("/Recording_Done", methods=['GET', 'POST'])
+    def Recording_Done():
+        response = VoiceResponse()
+        # The recording url will return a wav file by default, or an mp3 if you add .mp3
+        recording_url = request.values['RecordingUrl'] + '.mp3'
+        filename = request.values['RecordingSid'] + '.mp3'
+        with open('{}/{}'.format("Recordings", filename), 'wb') as f:
+            f.write(requests.get(recording_url).content)
+
+        return str(response)
+
+########################################################## RECORDING END ########################################################################################
+
+     #GlobalVariables.Voice_Messages.get("")
     ################################################## End Load blueprints ##########################################################
 
 
