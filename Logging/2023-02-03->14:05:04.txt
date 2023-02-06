@@ -1,9 +1,0 @@
-2023-02-03  14:05:04	INFO 	 MAIN 	 Starting
-2023-02-03  14:05:04	INFO 	 VOICE_CALL_INITIAL 	 in /Finalize/Yes
-2023-02-03  14:05:04	INFO 	 VOICE_CALL_INITIAL 	 in /Finalize/No
-2023-02-03  14:05:04	INFO 	 VOICE_CALL_INITIAL 	 in /Finalize/Unclear
-2023-02-03  14:05:04	INFO 	 MAIN 	 Starting
-2023-02-03  14:05:04	INFO 	 MAIN 	 Starting
-2023-02-03  14:05:04	INFO 	 MAIN 	 Starting
-2023-02-03  14:05:04	INFO 	 MAIN 	 Starting
-2023-02-03  14:05:05	INFO 	 LISTENING_FUNCTION 	 Done with listening, Message was -> Done

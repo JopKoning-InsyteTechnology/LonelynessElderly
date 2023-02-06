@@ -1,1 +1,0 @@
-2023-02-02  12:32:11	INFO 	 MAIN 	 Starting

@@ -47,17 +47,17 @@ def Listen_For_Answer():
 def No_Input():
     global Errors
     if Errors >= 3:
-        return Redirect("/Finalize/Unclear")
+        return Redirect(Task_URL + "/Finalize/Unclear")
     Errors += 1
 
-    return Play(GlobalVariables.Dail_Initial.Check_Unclear_Message, "/Play_Explain_Message")
+    return Play(GlobalVariables.Dail_Initial.Check_Unclear_Message, Task_URL + "/Play_Explain_Message")
     return Redirect("/Play_Explain_Message")
     #return Listen(Default_ListenTime_Begin,Default_ListenTime_Silence,Task_URL + "/Listen_For_Answer", Task_URL + "/Classify_Answer")@app.route('/Classify_Gather', methods=['GET', 'POST'])
 
 
 @Dail_Call_Initial.route("/Classify_Answer", methods=['GET', 'POST'])
 def Classify_Answer():
-    return ClassifyDailInput(request, "/Play_Check_Answer_Message/Yes", "/Play_Check_Answer_Message/No", "/Play_Check_Answer_Message/Unclear", "/Play_Check_Answer_Message/Unclear")
+    return ClassifyDailInput(request, Task_URL + "/Play_Check_Answer_Message/Yes", Task_URL + "/Play_Check_Answer_Message/No", Task_URL + "/Play_Check_Answer_Message/Unclear", Task_URL + "/Play_Check_Answer_Message/Unclear")
 
 
 @Dail_Call_Initial.route("/Play_Check_Answer_Message/<Classification>", methods=['GET', 'POST'])
@@ -75,8 +75,7 @@ def Classification(Classification):
 
 @Dail_Call_Initial.route("/Listen_For_Check_Answer_Result/<Classification>", methods=['GET', 'POST'])
 def Listen_For_Check_Answer_Result(Classification):
-    return GatherDailInput(Task_URL + "/Listen_For_Check_Answer_Result/" + Classification, Task_URL +"/Classify_Answer_2/" + Classification)
-
+    return GatherDailInput( Task_URL +"/Classify_Answer_2/" + Classification, Task_URL + "/Listen_For_Check_Answer_Result/" + Classification)
 
 @Dail_Call_Initial.route("/Classify_Answer_2/<Classification>", methods=['GET', 'POST'])
 def Classify_Answer_2(Classification):

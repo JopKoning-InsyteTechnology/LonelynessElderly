@@ -24,7 +24,14 @@ def test_Listen_For_Hello(client):
 def test_Play_Greeting_Message(client):
     response = client.post(baseURL + "Play_Greeting_Message")
     assert response.status_code == 200
-    assert b"<Play>" in response.data                                                                                  
+    assert b"<Play>" in response.data    
+
+def test_Play_Explain_Message(client):
+    response = client.post(baseURL + "Play_Explain_Message")
+    assert response.status_code == 200
+    assert b"<Play>" in response.data   
+
+def test_Classify_Answer(client):                                                    
     GlobalVariables.LastMessage = "Ja"
     response = client.post(baseURL + "Classify_Answer")
     assert Check_Redirect(baseURL,"Finalize") in response.data

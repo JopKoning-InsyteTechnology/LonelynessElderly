@@ -20,7 +20,7 @@ Task_URL = "/" + Voice_Call_Callback.name
 Host = "VOICE_CALL_CALLBACK"
 
 Default_ListenTime_Begin = 2
-Default_ListenTime_Silence = 1.5
+Default_ListenTime_Silence = 2
 
 @Voice_Call_Callback.route('/Start', methods=['GET', 'POST'])
 def list():
@@ -30,11 +30,6 @@ def list():
 def Voice():
         print(Task_URL)
         Logger(Host,"in /Voice", "INFO")
-        # print(request.url_root)
-        # print(request.url_rule)
-        # print(request.url_rule.rule)
-        # print(Voice_Call_Initial.name)
-
         return Redirect(Task_URL + "/Listen_For_Hello")
 
 @Voice_Call_Callback.route("/Listen_For_Hello", methods=['GET', 'POST'])
@@ -53,15 +48,12 @@ def Play_Explain_Message():
 
 @Voice_Call_Callback.route("/Listen_For_Answer", methods=['GET', 'POST'])
 def Listen_For_Answer():
-        
         return Listen(Default_ListenTime_Begin,Default_ListenTime_Silence,Task_URL + "/Listen_For_Answer", Task_URL + "/Classify_Answer")
 
 @Voice_Call_Callback.route("/Classify_Answer", methods=['GET', 'POST'])
 def Classify_Answer():
     Logger(Host,"in /Classify_Answer", "INFO")
     
-    global Errors
-
     Classification = Classify(GlobalVariables.LastMessage)
 
     print(GlobalVariables.LastMessage)

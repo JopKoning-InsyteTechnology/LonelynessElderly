@@ -29,6 +29,12 @@ def test_landing_page_test_Speech_API(client):
     response = client.post('/SpeechAPI_test/Start')
     assert response.status_code == 200
 
+def test_landing_config(client):
+    assert client.post("/" + Config.STARTING_URL_DIAL).status_code == 200
+    assert client.post("/" + Config.STARTING_URL_DIAL_CALLBACK).status_code == 200
+    assert client.post("/" + Config.STARTING_URL_VOICE).status_code == 200
+    assert client.post("/" + Config.STARTING_URL_VOICE_CALLBACK).status_code == 200
+
 # def test_landing_page_recording_done(client):
 #     response = client.post("/Recording_Done")
 #     print("/"+ Config.RECORDING_URL)
