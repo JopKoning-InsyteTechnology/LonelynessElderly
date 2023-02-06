@@ -124,7 +124,7 @@ def GatherDailInput(Redirect_on_input, Redirect_on_error):
     resp = VoiceResponse()
 
     # Start our <Gather> verb
-    gather = Gather(num_digits=1, action=Redirect_on_input)
+    gather = Gather(num_digits=1, action=Redirect_on_input, timeout = 10)
     resp.append(gather)
 
     # If the user doesn't select an option, redirect them into a loop

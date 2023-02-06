@@ -1,3 +1,5 @@
 /Config/*
 /Backup/*
 /Webserver/SpeechAPI/key.json
+/Logging/*
+/Recordings/*

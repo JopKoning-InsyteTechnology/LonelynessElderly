@@ -17,7 +17,7 @@ import requests
 
 
 Default_ListenTime_Begin = 2
-Default_ListenTime_Silence = 1.5
+Default_ListenTime_Silence = 2
 
 
 Voice_Call_Initial = Blueprint('Voice_Call_Initial', __name__,

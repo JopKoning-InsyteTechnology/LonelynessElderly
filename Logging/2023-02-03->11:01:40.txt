@@ -1,5 +1,0 @@
-2023-02-03  11:01:40	INFO 	 MAIN 	 Starting
-2023-02-03  11:01:40	INFO 	 MAIN 	 Starting
-2023-02-03  11:01:40	INFO 	 MAIN 	 Starting
-2023-02-03  11:01:40	INFO 	 MAIN 	 Starting
-2023-02-03  11:01:41	INFO 	 LISTENING_FUNCTION 	 Done with listening, Message was -> Done

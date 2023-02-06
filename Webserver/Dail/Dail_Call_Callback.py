@@ -59,15 +59,15 @@ def Listen_For_Answer():
 def No_Input():
     global Errors
     if Errors >= 3:
-        return Redirect("/Finalize/Unclear")
+        return Redirect(Task_URL + "/Finalize")
     Errors += 1
 
-    return Play(GlobalVariables.Dail_Callback.Check_Unclear_Message, "/Play_Explain_Message")
+    return Play(GlobalVariables.Dail_Callback.Check_Unclear_Message, Task_URL + "/Play_Explain_Message")
     return Redirect("/Play_Explain_Message")
 
 @Dail_Call_Callback.route("/Classify_Answer", methods=['GET', 'POST'])
 def Classify_Answer():
-    return ClassifyDailInput(request, "/Play_Check_Answer_Message/Yes", "/Play_Check_Answer_Message/No", "/Play_Check_Answer_Message/Unclear", "/Play_Check_Answer_Message/Unclear")
+    return ClassifyDailInput(request, Task_URL + "/Finalize", Task_URL + "/Play_Additional_Message", Task_URL + "/Play_Additional_Message", Task_URL + "/Play_Additional_Message")
 
 @Dail_Call_Callback.route("/Play_Additional_Message", methods=['GET', 'POST'])
 def Play_Additional_Message():

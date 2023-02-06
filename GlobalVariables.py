@@ -29,7 +29,7 @@ class Voice_Callback:
     Welcome_Message = "General/Greet"
     Voice_Callback_Explaination_Message = "Voice/Voice_Callback/Activity_Explaination"
     Voice_Callback_Aditional_Message = "Voice/Voice_Callback/Additional_Message"
-    Voice_Callback_Finalize_Yes_Message = "Voice/Voice_Callback/Yes"
+    Voice_Callback_Finalize_Yes_Message = "General/Finalize/Callback/Ja"
 
 
 class Dail_Initial:
@@ -46,7 +46,7 @@ class Dail_Callback:
     Welcome_Message = "General/Greet"
     Callback_Explaination_Message = "Dail/Dail_Callback/Activity_Explaination"
     Callback_Aditional_Message = "Dail/Dail_Callback/Additional_Message"
-    Callback_Finalize_Yes_Message = "Dail/Dail_Callback/Yes"
+    Callback_Finalize_Yes_Message = "General/Finalize/Callback/Ja"
 
 
 

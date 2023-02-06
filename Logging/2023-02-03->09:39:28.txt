@@ -1,6 +1,0 @@
-2023-02-03  09:39:28	INFO 	 MAIN 	 Starting
-2023-02-03  09:39:28	INFO 	 MAIN 	 Starting
-2023-02-03  09:39:28	INFO 	 MAIN 	 Starting
-2023-02-03  09:39:28	INFO 	 MAIN 	 Starting
-2023-02-03  09:39:28	INFO 	 MAIN 	 Starting
-2023-02-03  09:39:28	INFO 	 MAIN 	 Starting
