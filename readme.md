@@ -56,12 +56,11 @@ CTRL+SHIFT+P ngrok:start -> enter port 5000
 ``
 copy ngrok URL and paste in Credentials.py
 
-Correctly set:
-Account SID
-WILIO_ACCOUNT_SID = "XXX"
-TWILIO_AUTH_TOKEN = "XXX"
-TO = "+316XXX"
-FROM = "+316XXX"
+* Correctly set:
+* WILIO_ACCOUNT_SID = "XXX"
+* TWILIO_AUTH_TOKEN = "XXX"
+* TO = "+316XXX"
+* FROM = "+316XXX"
 ``
 
 
