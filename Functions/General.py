@@ -25,7 +25,8 @@ def Stop_Stream(Redirect):
 def Listen(Minimal_Wait, Timeout, Current_URL, Redirect_adress):
     #TODO: when talking too long hangup
     #TODO: test this in multiple times and ways
-   
+    sleep(0.2)
+
     if(GlobalVariables.StreamStarted == False and GlobalVariables.IsActive == True):
         print("LISTEN: stream is not yet started, but is still active. Wait one second and try again")
         sleep(1)
@@ -37,6 +38,7 @@ def Listen(Minimal_Wait, Timeout, Current_URL, Redirect_adress):
 
     if (GlobalVariables.TimeFunctionStarted == 0 or GlobalVariables.TimeLastMessage == 0):
         print("Listen : Global_variables are 0, Trying again: ")
+        sleep(0.2)
         return Redirect(Current_URL)
 
 
@@ -46,10 +48,12 @@ def Listen(Minimal_Wait, Timeout, Current_URL, Redirect_adress):
     print("Listen : TimeSinceStart : " + str(TimeSinceStart) + " | TimeSilent : " + str(TimeSilent))
     if (TimeSinceStart < Minimal_Wait):
         print("Listen : TimeSinceStart < minimal wait  : " + str(TimeSinceStart) + " < " + str(Minimal_Wait))
+        sleep(0.2)
         return Redirect(Current_URL)
     
     if (TimeSilent < Timeout):
         print("Listen : TimeSilent < Timeout  : " + str(TimeSilent) + " < " + str(Timeout))
+        sleep(0.2)
         return Redirect(Current_URL)
 
     print("Listen : Done, initial parameters are Minimal_Wait :" + str(Minimal_Wait) + " | Timout : " + str(Timeout))
