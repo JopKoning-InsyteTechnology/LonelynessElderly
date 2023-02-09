@@ -19,8 +19,8 @@ Voice_Call_Callback = Blueprint('Voice_Call_Callback', __name__,
 Task_URL = "/" + Voice_Call_Callback.name
 Host = "VOICE_CALL_CALLBACK"
 
-Default_ListenTime_Begin = 2
-Default_ListenTime_Silence = 2
+Default_ListenTime_Begin = 1.5
+Default_ListenTime_Silence = 1.5
 
 @Voice_Call_Callback.route('/Start', methods=['GET', 'POST'])
 def list():

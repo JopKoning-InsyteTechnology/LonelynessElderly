@@ -23,8 +23,6 @@ from Static import Static
 # Twilio Imports
 from twilio.twiml.voice_response import VoiceResponse
 
-from Test2.Test2 import  products_bp_2
-
 
 
 def create_app(test_config=None):
@@ -54,10 +52,6 @@ def create_app(test_config=None):
     app.register_blueprint(Dail_Call_Callback, url_prefix='/Dail_Call_Callback')
 
     app.register_blueprint(SpeechAPI_test, url_prefix='/SpeechAPI_test')
-
-
-    #app.register_blueprint(products_bp_2)
-
 
     app.register_blueprint(Static, url_prefix='/Static')
 
