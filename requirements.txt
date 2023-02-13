@@ -1,0 +1,5 @@
+# python3 -m pip install -r .\requirements.txt
+Flask>=0.12
+twilio
+flask-sock 
+simple-websocket 
