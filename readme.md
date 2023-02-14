@@ -73,8 +73,9 @@ copy ngrok URL and paste in Credentials.py
 * THIS IS NOT OK   https://50c7-2a02-a420-6b-a40e-95b8-d9e9-33cd-f4ee.ngrok.io/
 * THIS IS OK https://2a98-92-70-48-114.ngrok.io/
 * Solution not found (maybe restarting)?
-
-
+* Looks like it has to do with my mobile hotspot
+* Restarting did not fix anything
+* Possibly when wifi is too slow?
 ## Version History
 
 * 0.1
