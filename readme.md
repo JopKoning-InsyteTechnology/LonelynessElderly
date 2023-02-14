@@ -16,7 +16,8 @@ Code used for the elderly lonelyness project
 * flask-sock 
 * simple-websocket 
 * pytest
-* TODO: Complete this
+* google-api-python-client
+* google-cloud-speech
 
 ### Installing
 
@@ -46,7 +47,7 @@ pytest -v
 ```
 * Run the Flask server
 ```
-flask --app Main --debug run
+flask --app Main --debug run --host=0.0.0.0
 ```
 * Start Ngrok
 ``
