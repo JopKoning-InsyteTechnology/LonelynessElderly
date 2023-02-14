@@ -11,6 +11,8 @@ from Webserver.Voice.Voice_Call_Callback import  Voice_Call_Callback
 from Webserver.Dail.Dail_Call_Initial import Dail_Call_Initial
 from Webserver.Dail.Dail_Call_Callback import  Dail_Call_Callback
 
+from Webserver.Entry_Points.Entry_Points import Entry_Points 
+
 from Webserver.SpeechAPI.SpeechAPI import stream_google
 from Webserver.SpeechAPI.SpeechAPI_test import SpeechAPI_test
 
@@ -50,6 +52,9 @@ def create_app(test_config=None):
     app.register_blueprint(Voice_Call_Callback, url_prefix='/Voice_Call_Callback')
     app.register_blueprint(Dail_Call_Initial, url_prefix='/Dail_Call_Initial')
     app.register_blueprint(Dail_Call_Callback, url_prefix='/Dail_Call_Callback')
+
+    app.register_blueprint(Entry_Points, url_prefix='/Entry_Points')
+
 
     app.register_blueprint(SpeechAPI_test, url_prefix='/SpeechAPI_test')
 
