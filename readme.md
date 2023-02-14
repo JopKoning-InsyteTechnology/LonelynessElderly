@@ -46,7 +46,7 @@ pytest -v
 ```
 * Run the Flask server
 ```
-flask --app Main --debug run
+flask --app Main --debug run --host=0.0.0.0
 ```
 * Start Ngrok
 ``
