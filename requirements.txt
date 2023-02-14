@@ -5,3 +5,4 @@ flask-sock
 simple-websocket 
 pytest
 google-api-python-client
+google-cloud-speech
