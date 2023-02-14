@@ -35,6 +35,14 @@ def test_landing_config(client):
     assert client.post("/" + Config.STARTING_URL_VOICE).status_code == 200
     assert client.post("/" + Config.STARTING_URL_VOICE_CALLBACK).status_code == 200
 
+# def test_entry_point_initial_call(client):
+#     response = client.post('/Entry_Points/V/Jop/0683949299')
+#     assert response.status_code == 200
+#     assert 0
+
+
+
+
 # def test_landing_page_recording_done(client):
 #     response = client.post("/Recording_Done")
 #     print("/"+ Config.RECORDING_URL)
