@@ -1,0 +1,32 @@
+-------------------------- TEST START -------------------------- 
+Dail_Call_Callback OK
+-------------------------- TEST END -------------------------- 
+-------------------------- TEST START -------------------------- 
+Dail_Call_Initial->Yes
+Dail_Call_Initial->No
+Dail_Call_Initial->Unclear
+-------------------------- TEST END -------------------------- 
+-------------------------- TEST START -------------------------- 
+Voice_Call_Callback OK
+-------------------------- TEST END -------------------------- 
+-------------------------- TEST START -------------------------- 
+Voice_Call_Initial->Yes
+Voice_Call_Initial->No
+Voice_Call_Initial->Unclear
+-------------------------- TEST END -------------------------- 
+Recording received, end of call
+
+
+Jop : Voice_Call_Initial->Yes
+Recording received, end of call
+
+
+Jop_Koning : Recording received, end of call
+
+
+Jop_Koning : Recording received, end of call
+
+
+Jop_Koning : Jop_Koning : Recording received, end of call
+
+

@@ -13,6 +13,9 @@ from Functions.General import Listen, Play, Redirect, Classify, Logger
 # from GlobalVariables import Voice_Initial, LastMessage
 import GlobalVariables
 
+import time
+
+
 Voice_Call_Callback = Blueprint('Voice_Call_Callback', __name__,
     static_folder='static')
 
@@ -72,6 +75,9 @@ def Play_Additional_Message():
 
 @Voice_Call_Callback.route("/Finalize", methods=['GET', 'POST'])
 def Finalize():
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+        fo.write("Voice_Call_Callback OK" + "\n")
+
     Logger(Host,"in /Finalize/", "INFO")
     return Play(GlobalVariables.Voice_Callback.Voice_Callback_Finalize_Yes_Message,Task_URL+ "/Hangup")
 

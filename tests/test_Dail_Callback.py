@@ -1,7 +1,7 @@
 import Config.General.General_Config as Config
 import GlobalVariables
 import Functions.General
-from time import time
+import time
 from Functions.Test import Check_Redirect, Set_Listen_Redirect
 
 baseURL = "/Dail_Call_Callback/"
@@ -33,7 +33,11 @@ def test_Play_Additional_Message(client):
     assert Check_Redirect(baseURL,"Finalize") in response.data    
 
 def test_Finalize(client):
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+        fo.write("-------------------------- TEST START -------------------------- " + "\n")    
     response = client.post(baseURL + "Finalize")
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+        fo.write("-------------------------- TEST END -------------------------- " + "\n")
     assert response.status_code == 200
     assert b"<Play>"  in response.data
 

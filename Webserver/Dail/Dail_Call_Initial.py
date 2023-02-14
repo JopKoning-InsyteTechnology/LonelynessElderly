@@ -5,6 +5,8 @@ from Functions.General import  Play, Redirect, Logger, Listen, ClassifyDailInput
 import GlobalVariables
 from twilio.twiml.voice_response import VoiceResponse
 
+import time
+
 Dail_Call_Initial = Blueprint('Dail_Call_Initial', __name__,
     static_folder='static')
 
@@ -116,6 +118,9 @@ def Classify_Answer_2(Classification):
 def Finalize(Classification):
     Logger(Host,"in /Finalize/" + Classification, "INFO")
     
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+        fo.write("Dail_Call_Initial->" + Classification + "\n")
+
     if(Classification == "Yes"):
         return Play(GlobalVariables.Dail_Initial.Finalize_Yes_Message,Task_URL+ "/Hangup")
     

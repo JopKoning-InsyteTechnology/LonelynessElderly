@@ -1,7 +1,7 @@
 import Config.General.General_Config as Config
 import GlobalVariables
 import Functions.General
-from time import time
+import time
 from Functions.Test import Check_Redirect, Set_Listen_Redirect
 
 baseURL = "/Voice_Call_Initial/"
@@ -115,6 +115,9 @@ def test_Classify_Answer_2(client):
     # assert Check_Redirect(baseURL,"Finalize/Unclear") in response.data
 
 def test_Finalize(client):
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+        fo.write("-------------------------- TEST START -------------------------- " + "\n")    
+
     response = client.post(baseURL + "Finalize/Yes")
     assert response.status_code == 200
     assert b"<Play>"  in response.data
@@ -126,3 +129,5 @@ def test_Finalize(client):
     response = client.post(baseURL + "Finalize/Unclear")
     assert response.status_code == 200
     assert b"<Play>"  in response.data
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+        fo.write("-------------------------- TEST END -------------------------- " + "\n")

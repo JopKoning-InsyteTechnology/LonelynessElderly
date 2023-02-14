@@ -13,7 +13,7 @@ from Functions.General import Listen, Play, Redirect, Classify, Logger
 # from GlobalVariables import Voice_Initial, LastMessage
 import GlobalVariables
 
-import requests
+import requests, time
 
 
 Default_ListenTime_Begin = 1.5
@@ -148,6 +148,9 @@ def Classify_Answer_2(Classification):
 def Finalize(Classification):
     Logger(Host,"in /Finalize/" + Classification, "INFO")
     
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+        fo.write("Voice_Call_Initial->" + Classification + "\n")
+
     if(Classification == "Yes"):
         return Play(GlobalVariables.Voice_Initial.Finalize_Yes_Message,Task_URL+ "/Hangup")
     

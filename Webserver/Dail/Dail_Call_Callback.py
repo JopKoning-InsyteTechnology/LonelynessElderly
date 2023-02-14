@@ -13,6 +13,7 @@ from Functions.General import  Play, Redirect, Logger, Listen, ClassifyDailInput
 # from GlobalVariables import Voice_Initial, LastMessage
 import GlobalVariables
 
+import time
 
 Dail_Call_Callback = Blueprint('Dail_Call_Callback', __name__,
     static_folder='static')
@@ -77,6 +78,8 @@ def Play_Additional_Message():
 @Dail_Call_Callback.route("/Finalize", methods=['GET', 'POST'])
 def Finalize():
     Logger(Host,"in /Finalize/", "INFO")
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+        fo.write("Dail_Call_Callback OK" + "\n")    
     return Play(GlobalVariables.Dail_Callback.Callback_Finalize_Yes_Message,Task_URL+ "/Hangup")
 
 @Dail_Call_Callback.route("/Hangup", methods=['GET', 'POST'])

@@ -1,6 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 import Config.General.General_Config as Config
 from twilio.rest import Client
+import time
 
 Entry_Points = Blueprint('Entry_Points', __name__)
 
@@ -30,7 +31,7 @@ def Entry(Method, Name, Number):
 
     if(Method == "-h" or Method == "-help"):
         print("Python3 Call.py [METHOD] [NAME] [NUMBER]")
-        print("METHOD -> D(IAL)/V(OICE)/D(AIL_)C(allback)/V(oice_)C(allback)")
+        print("METHOD -> D(ial_Initial)/V(oice_Initial)/D(ail_)C(allback)/V(oice_)C(allback)")
         print("NAME -> STRING")
         print("NUMBER -> +316XXXXXXXX")
 # print("FILE_TO_WRITE_ATTENDANCE -> XXX.txt")
@@ -50,16 +51,16 @@ def Entry(Method, Name, Number):
 
     client = Client(Config.TWILIO_ACCOUNT_SID, Config.TWILIO_AUTH_TOKEN)
 
-    if(METHOD == "D" or METHOD == "DIAL"):
+    if(METHOD == "D" or METHOD == "Dail_Initial"):
         URL = Config.STARTING_URL_DIAL
 
-    elif(METHOD == "DC" or METHOD == "DAIL_CALLBACK"):
+    elif(METHOD == "DC" or METHOD == "Dail_Callback"):
         URL = Config.STARTING_URL_DIAL_CALLBACK
 
-    elif(METHOD == "V" or METHOD == "VOICE"):
+    elif(METHOD == "V" or METHOD == "Voice_Initial"):
         URL = Config.STARTING_URL_VOICE 
 
-    elif(METHOD == "VC" or METHOD == "VOICE_CALLBACK"):
+    elif(METHOD == "VC" or METHOD == "Voice_Callback"):
         URL = Config.STARTING_URL_VOICE_CALLBACK
     else:
         print("ERROR WRONG METHOD, METHOD = ", METHOD)
@@ -84,6 +85,7 @@ def Entry(Method, Name, Number):
                         )
 
     print(call.sid)
-    # with open("Attendance/activity1", "a") as fo:
-    #             fo.write(NAME + " : ")
-    return call.sid
+
+    with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+                fo.write(NAME + " : ")
+    return render_template('succes.html')

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request
+from flask import Flask, request, render_template, redirect
 import Config.General.General_Config as Config
 from flask_sock import Sock
 import requests
@@ -29,7 +29,7 @@ from twilio.twiml.voice_response import VoiceResponse
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, static_folder='Static')
+    app = Flask(__name__, static_folder='Static', template_folder='templates')
     sock = Sock(app)
 
     ################################################## Load configurations for testing ##########################################################
@@ -71,6 +71,23 @@ def create_app(test_config=None):
     Logger("MAIN", "Starting", "INFO")
     
 
+    @app.route('/', methods=['GET', 'POST'])
+    def index():
+        ## Display the HTML form template 
+        return render_template('index.html')
+    
+    @app.route('/Call', methods=['GET', 'POST'])
+    def Call():
+        ## Display the HTML form template 
+        if request.method == 'POST':
+
+                value = request.form['Mobile_Number'] + " " + request.form['Name'] + " " + request.form['submit_button']
+                redirect_url = Config.BASE_URL + "/Entry_Points/" + request.form['submit_button'] + "/" + request.form['Name'].replace(" ", "_") + "/" + request.form['Mobile_Number']
+                return redirect(redirect_url)
+                #return redirect("/Entry_Points/V/Jop/+31638475605")
+                
+        #         return redirect(url_for('success', name=user))
+        # return render_template('index.html')
 
   ########################################################## RECORDING END ########################################################################################
 
@@ -82,6 +99,9 @@ def create_app(test_config=None):
         filename = request.values['RecordingSid'] + '.mp3'
         with open('{}/{}'.format("Recordings", filename), 'wb') as f:
             f.write(requests.get(recording_url).content)
+
+        with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
+                fo.write("Recording received, end of call" + "\n\n\n")
 
         return str(response)
 
