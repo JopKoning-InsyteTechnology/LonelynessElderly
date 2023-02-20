@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 
 # Import Functions
-from Functions.General import  Play, Redirect, Logger, Listen, ClassifyDailInput, GatherDailInput, ClassifyDailInputSimple
+from Functions.General import  Play, Redirect, Logger, Listen, ClassifyDailInput, GatherDailInput, ClassifyDailInputSimple, Print_Log
 import GlobalVariables
 from twilio.twiml.voice_response import VoiceResponse
 
@@ -22,7 +22,7 @@ def list():
 
 @Dail_Call_Initial.route("/Dail", methods=['GET', 'POST'])
 def Voice():
-        print(Task_URL)
+        Print_Log(Task_URL)
         Logger(Host,"in /Voice", "INFO")
         return Redirect(Task_URL + "/Listen_For_Hello")
 
@@ -87,8 +87,8 @@ def Classify_Answer_2(Classification):
 
     result = ClassifyDailInputSimple(request)
     
-    print("Result of classification : " + result)
-    print("Number of errors : " + str(Errors))
+    Print_Log("Result of classification : " + result)
+    Print_Log("Number of errors : " + str(Errors))
 
     if(result == "Yes"):
         Errors = 0

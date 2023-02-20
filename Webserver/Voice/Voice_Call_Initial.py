@@ -8,7 +8,7 @@ from twilio.twiml.voice_response import VoiceResponse
 import Config.General.General_Config as Config
 
 # Import Functions
-from Functions.General import Listen, Play, Redirect, Classify, Logger
+from Functions.General import Listen, Play, Redirect, Classify, Logger, Print_Log
 
 # from GlobalVariables import Voice_Initial, LastMessage
 import GlobalVariables
@@ -37,12 +37,12 @@ def list():
 
 @Voice_Call_Initial.route("/Voice", methods=['GET', 'POST'])
 def Voice():
-        print(Task_URL)
+        Print_Log(Task_URL)
         Logger(Host,"in /Voice", "INFO")
-        # print(request.url_root)
-        # print(request.url_rule)
-        # print(request.url_rule.rule)
-        # print(Voice_Call_Initial.name)
+        # Print_Log(request.url_root)
+        # Print_Log(request.url_rule)
+        # Print_Log(request.url_rule.rule)
+        # Print_Log(Voice_Call_Initial.name)
 
         return Redirect(Task_URL + "/Listen_For_Hello")
 
@@ -73,8 +73,8 @@ def Classify_Answer():
 
         Classification = Classify(GlobalVariables.LastMessage)
 
-        print(GlobalVariables.LastMessage)
-        print(Classification)
+        Print_Log(GlobalVariables.LastMessage)
+        Print_Log(Classification)
 
         if(Classification == "Yes"):
             return Redirect(Task_URL + "/Play_Check_Answer_Message/Yes")
@@ -117,9 +117,9 @@ def Classify_Answer_2(Classification):
 
     result = Classify(GlobalVariables.LastMessage)
 
-    print("Message to Classify : " + GlobalVariables.LastMessage)
-    print("Result of classification : " + result)
-    print("Number of errors : " + str(Errors))
+    Print_Log("Message to Classify : " + GlobalVariables.LastMessage)
+    Print_Log("Result of classification : " + result)
+    Print_Log("Number of errors : " + str(Errors))
 
     if(result == "Yes"):
         Errors = 0

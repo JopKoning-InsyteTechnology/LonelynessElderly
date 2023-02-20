@@ -18,7 +18,7 @@ from Webserver.SpeechAPI.SpeechAPI_test import SpeechAPI_test
 
 import GlobalVariables
 
-from Functions.General import Logger
+from Functions.General import Logger, Print_Log
 
 from Static import Static
 
@@ -52,10 +52,7 @@ def create_app(test_config=None):
     app.register_blueprint(Voice_Call_Callback, url_prefix='/Voice_Call_Callback')
     app.register_blueprint(Dail_Call_Initial, url_prefix='/Dail_Call_Initial')
     app.register_blueprint(Dail_Call_Callback, url_prefix='/Dail_Call_Callback')
-
     app.register_blueprint(Entry_Points, url_prefix='/Entry_Points')
-
-
     app.register_blueprint(SpeechAPI_test, url_prefix='/SpeechAPI_test')
 
     app.register_blueprint(Static, url_prefix='/Static')
@@ -64,7 +61,7 @@ def create_app(test_config=None):
     @sock.route('/SpeechAPI/stream_google')
     def Speech(ws):
         stream_google(ws)
-        print("__INIT__.PY MAIN: We are done with the socket, no remaining connections")
+        Print_Log("__INIT__.PY MAIN: We are done with the socket, no remaining connections")
         return 200
         
     GlobalVariables.FILE = time.strftime("%Y-%m-%d->%H:%M:%S") + ".txt"
@@ -97,7 +94,8 @@ def create_app(test_config=None):
         # The recording url will return a wav file by default, or an mp3 if you add .mp3
         recording_url = request.values['RecordingUrl'] + '.mp3'
         filename = request.values['RecordingSid'] + '.mp3'
-        with open('{}/{}'.format("Recordings", filename), 'wb') as f:
+
+        with open('{}/{}'.format("Recordings", GlobalVariables.FILE.replace(".txt", ".mp3")), 'wb') as f:
             f.write(requests.get(recording_url).content)
 
         with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
@@ -113,8 +111,10 @@ def create_app(test_config=None):
 
     # @app.route('/static/<path:filename>')
     # def send_file(filename):
-    #         print(app.static_folder)
-    #         print(filename)
+    #         Print_Log(app.static_folder)
+    #         Print_Log(filename)
     #         return send_from_directory("/home/jop/Desktop/Afstuderen/LonelynessElderly/Static/", filename)
 
     return app
+
+    

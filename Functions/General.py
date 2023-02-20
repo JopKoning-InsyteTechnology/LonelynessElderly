@@ -28,7 +28,7 @@ def Listen(Minimal_Wait, Timeout, Current_URL, Redirect_adress):
     sleep(0.2)
 
     if(GlobalVariables.StreamStarted == False and GlobalVariables.IsActive == True):
-        print("LISTEN: stream is not yet started, but is still active. Wait one second and try again")
+        Print_Log("LISTEN: stream is not yet started, but is still active. Wait one second and try again")
         sleep(1)
         return Redirect(Current_URL)
 
@@ -37,7 +37,7 @@ def Listen(Minimal_Wait, Timeout, Current_URL, Redirect_adress):
         return Start_Stream(Current_URL)
 
     if (GlobalVariables.TimeFunctionStarted == 0 or GlobalVariables.TimeLastMessage == 0):
-        print("Listen : Global_variables are 0, Trying again: ")
+        Print_Log("Listen : Global_variables are 0, Trying again: ")
         sleep(0.2)
         return Redirect(Current_URL)
 
@@ -45,20 +45,20 @@ def Listen(Minimal_Wait, Timeout, Current_URL, Redirect_adress):
     TimeSinceStart = time() - GlobalVariables.TimeFunctionStarted
     TimeSilent = time() - GlobalVariables.TimeLastMessage
 
-    print("Listen : TimeSinceStart : " + str(TimeSinceStart) + " | TimeSilent : " + str(TimeSilent))
+    Print_Log("Listen : TimeSinceStart : " + str(TimeSinceStart) + " | TimeSilent : " + str(TimeSilent))
     if (TimeSinceStart < Minimal_Wait):
-        print("Listen : TimeSinceStart < minimal wait  : " + str(TimeSinceStart) + " < " + str(Minimal_Wait))
+        Print_Log("Listen : TimeSinceStart < minimal wait  : " + str(TimeSinceStart) + " < " + str(Minimal_Wait))
         sleep(0.2)
         return Redirect(Current_URL)
     
     if (TimeSilent < Timeout):
-        print("Listen : TimeSilent < Timeout  : " + str(TimeSilent) + " < " + str(Timeout))
+        Print_Log("Listen : TimeSilent < Timeout  : " + str(TimeSilent) + " < " + str(Timeout))
         sleep(0.2)
         return Redirect(Current_URL)
 
-    print("Listen : Done, initial parameters are Minimal_Wait :" + str(Minimal_Wait) + " | Timout : " + str(Timeout))
-    print("Listen : Done, Time total begin start of websocketconnection :" + str(TimeSinceStart) + " | Total time since last message : " + str(TimeSilent))
-    print("Listen : Done, result:" + str(GlobalVariables.LastMessage))
+    Print_Log("Listen : Done, initial parameters are Minimal_Wait :" + str(Minimal_Wait) + " | Timout : " + str(Timeout))
+    Print_Log("Listen : Done, Time total begin start of websocketconnection :" + str(TimeSinceStart) + " | Total time since last message : " + str(TimeSilent))
+    Print_Log("Listen : Done, result:" + str(GlobalVariables.LastMessage))
 
     Logger("LISTENING_FUNCTION", "Done with listening, Message was -> " + str(GlobalVariables.LastMessage), "INFO")
 
@@ -72,15 +72,19 @@ def Listen(Minimal_Wait, Timeout, Current_URL, Redirect_adress):
 
     return Redirect(Current_URL)
 
-
-def Logger(Host, Messsage, Severity):
-    f = open("Logging/" + GlobalVariables.FILE, "a")
-    f.write(strftime("%Y-%m-%d  %H:%M:%S") + "\t" + Severity + " \t " + Host + " \t " + Messsage + "\n")
+def Print_Log(Message):
+    f = open("Logging/" + GlobalVariables.FILE + "-Log", "a")
+    f.write(strftime("%Y-%m-%d  %H:%M:%S") + " \t " + Message + "\n")
     f.close()
 
-def Logger_Classification(Host, Messsage, Severity):
+def Logger(Host, Message, Severity):
+    f = open("Logging/" + GlobalVariables.FILE, "a")
+    f.write(strftime("%Y-%m-%d  %H:%M:%S") + "\t" + Severity + " \t " + Host + " \t " + Message + "\n")
+    f.close()
+
+def Logger_Classification(Host, Message, Severity):
     f = open("Logging/" + GlobalVariables.FILE + "_Classification", "a")
-    f.write(strftime("%Y-%m-%d  %H:%M:%S") + "\t" + Severity + " \t " + Host + " \t " + Messsage + "\n")
+    f.write(strftime("%Y-%m-%d  %H:%M:%S") + "\t" + Severity + " \t " + Host + " \t " + Message + "\n")
     f.close()
 
 def Redirect(Redirect):
@@ -106,11 +110,10 @@ def Play(File, Redirect):
     return str(resp)
 
 def Classify(Message):
-    print(Message)
+    Print_Log(Message)
     if Message != "" :
         Speech = Message.strip(",.").lower()
-        print (Speech)
-        print (GlobalVariables.NoClassifierList)
+        Print_Log (Speech)
         for Classifier in GlobalVariables.NoClassifierList:
             if Classifier in Speech:
                 return "No"

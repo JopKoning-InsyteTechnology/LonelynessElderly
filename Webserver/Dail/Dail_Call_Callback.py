@@ -8,7 +8,7 @@ from twilio.twiml.voice_response import VoiceResponse
 import Config.General.General_Config as Config
 
 # Import Functions
-from Functions.General import  Play, Redirect, Logger, Listen, ClassifyDailInput, GatherDailInput, ClassifyDailInputSimple
+from Functions.General import  Play, Redirect, Logger, Listen, ClassifyDailInput, GatherDailInput, ClassifyDailInputSimple, Print_Log
 
 # from GlobalVariables import Voice_Initial, LastMessage
 import GlobalVariables
@@ -34,7 +34,7 @@ def list():
 
 @Dail_Call_Callback.route("/Dail", methods=['GET', 'POST'])
 def Dail():
-        print(Task_URL)
+        Print_Log(Task_URL)
         Logger(Host,"in /Dail", "INFO")
         return Redirect(Task_URL + "/Listen_For_Hello")
 

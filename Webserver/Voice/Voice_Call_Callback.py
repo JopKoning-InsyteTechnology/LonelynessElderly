@@ -8,7 +8,7 @@ from twilio.twiml.voice_response import VoiceResponse
 import Config.General.General_Config as Config
 
 # Import Functions
-from Functions.General import Listen, Play, Redirect, Classify, Logger
+from Functions.General import Listen, Play, Redirect, Classify, Logger, Print_Log
 
 # from GlobalVariables import Voice_Initial, LastMessage
 import GlobalVariables
@@ -31,7 +31,7 @@ def list():
 
 @Voice_Call_Callback.route("/Voice", methods=['GET', 'POST'])
 def Voice():
-        print(Task_URL)
+        Print_Log(Task_URL)
         Logger(Host,"in /Voice", "INFO")
         return Redirect(Task_URL + "/Listen_For_Hello")
 
@@ -59,8 +59,8 @@ def Classify_Answer():
     
     Classification = Classify(GlobalVariables.LastMessage)
 
-    print(GlobalVariables.LastMessage)
-    print(Classification)
+    Print_Log(GlobalVariables.LastMessage)
+    Print_Log(Classification)
 
     if(Classification == "Yes"):
         return Redirect(Task_URL + "/Finalize")

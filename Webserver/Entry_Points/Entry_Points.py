@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 import Config.General.General_Config as Config
+from Functions.General import Print_Log
 from twilio.rest import Client
 import time
 
@@ -10,9 +11,9 @@ Entry_Points = Blueprint('Entry_Points', __name__)
 
 @Entry_Points.route('/<Method>/<Name>/<Number>',  methods=['GET', 'POST'])
 def Entry(Method, Name, Number):
-    print("In voice initial entry point")
-    print(Number)
-    print(Method)
+    Print_Log("In voice initial entry point")
+    Print_Log(Number)
+    Print_Log(Method)
 
     # client = Client(Config.TWILIO_ACCOUNT_SID, Config.TWILIO_AUTH_TOKEN)
     # call = client.calls.create(
@@ -23,26 +24,26 @@ def Entry(Method, Name, Number):
     #                             to=Config.TO,
     #                             from_=Config.FROM
     #                         )
-    # print(call.sid)
+    # Print_Log(call.sid)
     # return "Test1"
 
 
 
 
     if(Method == "-h" or Method == "-help"):
-        print("Python3 Call.py [METHOD] [NAME] [NUMBER]")
-        print("METHOD -> D(ial_Initial)/V(oice_Initial)/D(ail_)C(allback)/V(oice_)C(allback)")
-        print("NAME -> STRING")
-        print("NUMBER -> +316XXXXXXXX")
-# print("FILE_TO_WRITE_ATTENDANCE -> XXX.txt")
+        Print_Log("Python3 Call.py [METHOD] [NAME] [NUMBER]")
+        Print_Log("METHOD -> D(ial_Initial)/V(oice_Initial)/D(ail_)C(allback)/V(oice_)C(allback)")
+        Print_Log("NAME -> STRING")
+        Print_Log("NUMBER -> +316XXXXXXXX")
+# Print_Log("FILE_TO_WRITE_ATTENDANCE -> XXX.txt")
         exit()
 
     if (Method == "" or Number == ""):
-        print("ERROR Too few arguments")
+        Print_Log("ERROR Too few arguments")
         exit()
 
     if ("/" in Method):
-        print("ERROR Too many arguments")
+        Print_Log("ERROR Too many arguments")
         exit()
 
     METHOD = Method
@@ -63,16 +64,16 @@ def Entry(Method, Name, Number):
     elif(METHOD == "VC" or METHOD == "Voice_Callback"):
         URL = Config.STARTING_URL_VOICE_CALLBACK
     else:
-        print("ERROR WRONG METHOD, METHOD = ", METHOD)
+        Print_Log("ERROR WRONG METHOD, METHOD = ", METHOD)
         exit()
 
-    print("Calling " + NAME +  " on number: " + NUMBER + " with " + METHOD + " method")
+    Print_Log("Calling " + NAME +  " on number: " + NUMBER + " with " + METHOD + " method")
 
-    print("recording_status_callback = " +Config.BASE_URL+ "/" +Config.RECORDING_URL)
-    print("recording_status_callback_event=completed")
-    print("url=" +Config.BASE_URL+ "/" + URL)
-    print("to="  + NUMBER)
-    print("from_="  +Config.FROM)
+    Print_Log("recording_status_callback = " +Config.BASE_URL+ "/" +Config.RECORDING_URL)
+    Print_Log("recording_status_callback_event=completed")
+    Print_Log("url=" +Config.BASE_URL+ "/" + URL)
+    Print_Log("to="  + NUMBER)
+    Print_Log("from_="  +Config.FROM)
 
     call = client.calls.create(
                         # url='https://b3b6-46-145-146-153.ngrok.io/voice',
@@ -84,7 +85,7 @@ def Entry(Method, Name, Number):
                             from_=Config.FROM
                         )
 
-    print(call.sid)
+    Print_Log(call.sid)
 
     with open("Attendance/" + time.strftime("%Y-%m-%d") + ".txt", "a") as fo:
                 fo.write(NAME + " : ")
